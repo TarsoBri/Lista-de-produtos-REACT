@@ -1,25 +1,22 @@
 import { useState, useEffect } from "react";
 
-// 4 - custom hook
-
 export const useFetch = (url) => {
   const [data, setData] = useState(null);
 
-  // 5 - refatorando post
+  // - refatorando post
   const [config, setConfig] = useState(null);
   const [method, setMethod] = useState(null);
   const [callFetch, setCallFetch] = useState(null);
 
-  // 6 - Loading
+  //  - Loading
   const [loading, setLoading] = useState(false);
 
-  // 7 -  tratando erros
+  //  - erros
   const [error, setError] = useState(null);
 
-  // 8 - Delete
+  // - Delete
   const [itemId, setItemId] = useState(null);
 
-  // 5 -
   const httpConfig = (data, method) => {
     if (method === "POST") {
       setConfig({
@@ -46,7 +43,7 @@ export const useFetch = (url) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // 6 - loading
+      // - loading
       setLoading(true);
 
       try {
@@ -65,19 +62,24 @@ export const useFetch = (url) => {
     fetchData();
   }, [url, callFetch]);
 
-  // 5 - refatorando post
+  // - refatorando post
   useEffect(() => {
     const httpRequest = async () => {
+      let json;
       if (method === "POST") {
         let fetchOptions = [url, config];
 
         const res = await fetch(...fetchOptions);
-
-        const json = await res.json();
-
-        setCallFetch(json);
+        ("");
+        json = await res.json();
       } else if (method === "DELETE") {
+        const deleteUrl = `${url}/${itemId}`;
+
+        const res = await fetch(deleteUrl, config);
+
+        json = await res.json();
       }
+      setCallFetch(json);
     };
 
     httpRequest();

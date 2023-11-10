@@ -3,7 +3,7 @@ import "./App.css";
 import React from "react";
 
 import { useState, useEffect } from "react";
-// 4 - costum hook
+// - costum hook
 import { useFetch } from "./hooks/useFetch";
 
 const url = "http://localhost:3000/products";
@@ -14,20 +14,10 @@ function App() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
-  // 1 - resgatando dados
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch(url);
-  //     const data = await res.json();
-  //     setProducts(data);
-  //   }
-  //   fetchData();
-  // }, []);
-
-  // 4 - costum hook para resgatar dado
+  // - costum hook para resgatar dado
   const { data: items, httpConfig, loading, error } = useFetch(url);
 
-  // 2 - add de produtos
+  // - add de produtos
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,36 +25,20 @@ function App() {
       name,
       price,
     };
-
-    console.log("Produto criado:", product);
-
-    // const res = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(product),
-    // });
-    // // 3 - Carregamento dinâmico
-    // const addedProduct = await res.json();
-    // setProducts((prevProducts) => [...prevProducts, addedProduct]);
-
-    // 5 - refatorando post
     httpConfig(product, "POST");
 
     setName("");
     setPrice("");
   };
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log(e);
+  const handleDelete = (id) => {
+    httpConfig(id, "DELETE");
   };
 
   return (
     <div className="App">
       <h1>Lista de Produtos</h1>
-      {/* 6  - loading */}
+      {/* - loading */}
       {loading && <p>Carregando dados...</p>}
       {error && <p>{error}</p>}
       {!error && (
@@ -73,7 +47,7 @@ function App() {
             items.map((product) => (
               <li key={product.id}>
                 {product.name} - R${product.price}
-                <button onClick={product.id > 0 && handleDelete}>X</button>
+                <button onClick={() => handleDelete(product.id)}>X</button>
               </li>
             ))}
         </ul>

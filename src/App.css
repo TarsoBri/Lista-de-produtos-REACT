@@ -10,8 +10,12 @@ body {
     padding: 0;
 }
 
+h1 {
+    margin-bottom: 50px;
+}
+
 h2 {
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 button {
@@ -23,6 +27,7 @@ button {
     cursor: pointer;
     color: white;
     transition: all .2s;
+    padding: 5px 10px;
 }
 
 button:hover {
@@ -36,6 +41,7 @@ button:hover {
 }
 
 .products li {
+    font-size: 22px;
     margin-top: 15px;
 }
 
